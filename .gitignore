@@ -1,0 +1,54 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Go build artifacts
+bin/
+build/
+dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go workspace / cache
+vendor/
+go.work
+go.work.sum
+
+# Air (live reload)
+.tmp/
+tmp/
+.air/
+air.log
+
+# Logs
+*.log
+
+# Database / local files
+*.db
+*.sqlite
+*.sqlite3
+
+# Editor / OS junk
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage.out
+coverage.html
+
+# Migrations runtime artifacts (keep SQL files)
+migrations/*.lock
+migrations/*.tmp
+
+# Secrets / credentials
+*.pem
+*.key
+*.crt
