@@ -30,6 +30,8 @@ func main() {
 	}
 	defer pool.Close() //runs when function returns
 
+	database.DB = pool
+
 	serviceContainer := container.New(pool, cfg)
 
 	router := http.SetupRouter(cfg, serviceContainer)

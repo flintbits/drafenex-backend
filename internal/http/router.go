@@ -20,7 +20,7 @@ func SetupRouter(cfg *config.Config, serviceContainer *container.Container) *gin
 
 	routes.RegisterHealthRoutes(router)
 
-	routes.RegisterAuthRoutes(router, serviceContainer.UserService, serviceContainer.AuthService)
+	routes.RegisterAuthRoutes(cfg, router, serviceContainer.UserService, serviceContainer.AuthService)
 
 	return router
 }

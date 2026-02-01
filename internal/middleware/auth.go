@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"net/http"
-	"strings"
 
 	"github.com/flintbits/drafenex-backend/internal/auth"
 	"github.com/flintbits/drafenex-backend/internal/config"
@@ -12,20 +11,14 @@ import (
 func AuthMiddleware(cfg *config.Config) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		authHeader := c.GetHeader("Authorization")
-		if authHeader == "" {
+		tokenCookie, err := c.Cookie("access_token")
+		if err != nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "authorization header required"})
 			return
 		}
 
-		tokenString := strings.TrimPrefix(authHeader, "Bearer ")
-		if tokenString == authHeader {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "invalid authorization header"})
-			return
-		}
-
 		claims, err := auth.ParseAccessToken(
-			tokenString,
+			tokenCookie,
 			cfg.JWTSecret,
 		)
 		if err != nil {

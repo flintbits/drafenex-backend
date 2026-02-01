@@ -32,8 +32,19 @@ func LoginHandler(authService *services.AuthService) gin.HandlerFunc {
 			return
 		}
 
+		http.SetCookie(
+			c.Writer, &http.Cookie{
+				Name:     "access_token",
+				Value:    token,
+				HttpOnly: true,
+				Secure:   false, //true in production
+				SameSite: http.SameSiteLaxMode,
+				Path:     "/",
+				MaxAge:   60 * 15,
+			})
+
 		c.JSON(http.StatusOK, gin.H{
-			"token": token,
+			// "token": token,
 			"user": gin.H{
 				"id":           user.ID,
 				"email":        user.Email,
@@ -43,3 +54,21 @@ func LoginHandler(authService *services.AuthService) gin.HandlerFunc {
 		})
 	}
 }
+
+func LogoutHandler() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		http.SetCookie(c.Writer, &http.Cookie{
+			Name:     "access_token",
+			Value:    "",
+			Path:     "/",
+			HttpOnly: true,
+			Secure:   false,
+			SameSite: http.SameSiteLaxMode,
+			MaxAge:   -1,
+		})
+
+		c.JSON(http.StatusOK, gin.H{"message": "logged out successfully"})
+	}
+}
+
+//ToDo: Secure:   false, //true in production

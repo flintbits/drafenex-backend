@@ -65,3 +65,28 @@ func (r *UserRepository) GetUserByEmail(ctx context.Context, email string) (*mod
 
 	return &fetchedUser, nil
 }
+
+func (r *UserRepository) GetUserByUserID(ctx context.Context, id int64) (*models.User, error) {
+	query := `
+		SELECT id,email,password_hash,role,is_onboarded,created_at,updated_at
+		FROM users
+		WHERE id = $1
+	`
+	fetchedUser := models.User{}
+
+	err := r.pool.QueryRow(ctx, query, id).Scan(
+		&fetchedUser.ID,
+		&fetchedUser.Email,
+		&fetchedUser.PasswordHash,
+		&fetchedUser.Role,
+		&fetchedUser.IsOnboarded,
+		&fetchedUser.CreatedAt,
+		&fetchedUser.UpdatedAt,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &fetchedUser, nil
+}

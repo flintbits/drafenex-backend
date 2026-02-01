@@ -11,6 +11,10 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+var (
+	ErrUserNotFound = errors.New("user not found")
+)
+
 type UserService struct {
 	userRepo *repository.UserRepository
 }
@@ -49,4 +53,18 @@ func (s *UserService) CreateUser(ctx context.Context, email, password, role stri
 	}
 
 	return createdUser, nil
+}
+
+func (s *UserService) GetByID(ctx context.Context, id int64) (*models.User, error) {
+
+	if id <= 0 {
+		return nil, ErrUserNotFound
+	}
+
+	user, err := s.userRepo.GetUserByUserID(ctx, id)
+	if err != nil {
+		return nil, ErrUserNotFound
+	}
+
+	return user, nil
 }
