@@ -6,6 +6,7 @@ import (
 	"github.com/flintbits/drafenex-backend/internal/config"
 	"github.com/flintbits/drafenex-backend/internal/container"
 	"github.com/flintbits/drafenex-backend/internal/http/routes"
+	"github.com/flintbits/drafenex-backend/internal/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,7 +16,11 @@ func SetupRouter(cfg *config.Config, serviceContainer *container.Container) *gin
 		log.Fatal("failed to set trusted proxies:", err)
 	}
 
+	router.Use(middleware.CORSMiddleware())
+
 	routes.RegisterHealthRoutes(router)
+
+	routes.RegisterAuthRoutes(router, serviceContainer.UserService, serviceContainer.AuthService)
 
 	return router
 }

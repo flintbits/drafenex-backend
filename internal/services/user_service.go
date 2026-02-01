@@ -12,11 +12,11 @@ import (
 )
 
 type UserService struct {
-	repo *repository.UserRepository
+	userRepo *repository.UserRepository
 }
 
-func NewUserService(repo *repository.UserRepository) *UserService {
-	return &UserService{repo: repo}
+func NewUserService(userRepo *repository.UserRepository) *UserService {
+	return &UserService{userRepo: userRepo}
 }
 
 func (s *UserService) CreateUser(ctx context.Context, email, password, role string) (*models.User, error) {
@@ -38,7 +38,7 @@ func (s *UserService) CreateUser(ctx context.Context, email, password, role stri
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 
-	createdUser, err := s.repo.CreateUser(ctx, user)
+	createdUser, err := s.userRepo.CreateUser(ctx, user)
 
 	if err != nil {
 		if strings.Contains(err.Error(), "duplucate") || strings.Contains(err.Error(), "unique") {
