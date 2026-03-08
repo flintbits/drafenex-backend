@@ -18,9 +18,13 @@ func SetupRouter(cfg *config.Config, serviceContainer *container.Container) *gin
 
 	router.Use(middleware.CORSMiddleware())
 
+	api := router.Group("/api")
+
 	routes.RegisterHealthRoutes(router)
 
-	routes.RegisterAuthRoutes(cfg, router, serviceContainer.UserService, serviceContainer.AuthService)
+	routes.RegisterAuthRoutes(cfg, api, serviceContainer.UserService, serviceContainer.AuthService)
+
+	routes.RegisterOrganizerRoutes(cfg, api, serviceContainer.OrganizerService)
 
 	return router
 }

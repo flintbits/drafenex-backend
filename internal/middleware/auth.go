@@ -23,7 +23,7 @@ func AuthMiddleware(cfg *config.Config) gin.HandlerFunc {
 		)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized,
-				gin.H{"error": "invaid or expired token"})
+				gin.H{"error": "invalid or expired token"})
 			return
 		}
 

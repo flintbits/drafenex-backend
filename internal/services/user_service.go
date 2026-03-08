@@ -45,7 +45,7 @@ func (s *UserService) CreateUser(ctx context.Context, email, password, role stri
 	createdUser, err := s.userRepo.CreateUser(ctx, user)
 
 	if err != nil {
-		if strings.Contains(err.Error(), "duplucate") || strings.Contains(err.Error(), "unique") {
+		if strings.Contains(err.Error(), "duplicate") || strings.Contains(err.Error(), "unique") {
 			return nil, errors.New("Email already registered")
 		}
 
