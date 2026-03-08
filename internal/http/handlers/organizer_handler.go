@@ -20,6 +20,16 @@ func NewOrganizerHandler(organizerService *services.OrganizerService) *Organizer
 	}
 }
 
+// CreateOrganizer godoc
+// @Summary Create organizer
+// @Description Create organizer onboarding profile
+// @Tags organizer
+// @Accept json
+// @Produce json
+// @Param input body dto.CreateOrganizerInput true "Organizer input"
+// @Success 201 {object} map[string]interface{}
+// @Failure 400 {object} map[string]string
+// @Router /organizer/register [post]
 func (h *OrganizerHandler) CreateOrganizer() gin.HandlerFunc {
 	return func(c *gin.Context) {
 

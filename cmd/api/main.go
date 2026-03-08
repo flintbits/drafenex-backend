@@ -1,5 +1,10 @@
 package main
 
+// @title Drafenex API
+// @version 1.0
+// @description Drafenex backend API
+// @BasePath /api
+
 import (
 	"log"
 

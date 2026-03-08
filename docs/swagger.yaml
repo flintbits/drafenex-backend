@@ -1,0 +1,65 @@
+basePath: /api
+definitions:
+  dto.CreateOrganizerInput:
+    properties:
+      addressLine1:
+        type: string
+      addressLine2:
+        type: string
+      avatarUrl:
+        type: string
+      bio:
+        type: string
+      city:
+        type: string
+      companyName:
+        type: string
+      country:
+        type: string
+      fullName:
+        type: string
+      phoneNumber:
+        type: string
+      postalCode:
+        type: string
+      state:
+        type: string
+      website:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Drafenex backend API
+  title: Drafenex API
+  version: "1.0"
+paths:
+  /organizer/register:
+    post:
+      consumes:
+      - application/json
+      description: Create organizer onboarding profile
+      parameters:
+      - description: Organizer input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateOrganizerInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Create organizer
+      tags:
+      - organizer
+swagger: "2.0"
